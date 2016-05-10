@@ -84,6 +84,7 @@ What do you see?
 </tr>
 <tr>
 <td style="vertical-align:top;">
+```
     -bash-4.3$ heroku
     -bash-4.3$ heroku
     Updating Heroku v4 CLI to 4.27.9-cce0260 (master)... done
@@ -92,7 +93,7 @@ What do you see?
     Usage: heroku COMMAND [--app APP] [command-specific-options]
 
     Primary help topics, type "heroku help TOPIC" for more details:
-
+```
 <em>\[Many lines of output omitted\]</em>
 
       twofactor    #  manage two-factor authentication settings
@@ -106,12 +107,13 @@ In this case, click on the button on the Heroku tutorial web page, and continue:
 
 </td>
 <td style="vertical-align:top;">
+```
     -bash-4.3$ heroku
     bash: heroku: command not found...
     Install package 'rubygem-heroku' to provide command 'heroku'? [N/y] 
 
 In this case, type N and hit enter, and then read through this step again.
-
+```
 </td>
 </tr>
 </table>
