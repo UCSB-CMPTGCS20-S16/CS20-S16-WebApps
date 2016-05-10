@@ -95,25 +95,21 @@ What do you see?
     Primary help topics, type "heroku help TOPIC" for more details:
 </pre>
 <em>\[Many lines of output omitted\]</em>
-
+</pre>
       twofactor    #  manage two-factor authentication settings
       update       #  update the heroku client
       version      #  display version
     -bash-4.3$ 
-
-In this case, click on the button on the Heroku tutorial web page, and continue:
-
-<http://www.cs.ucsb.edu/~pconrad/images/heroku/50/IHaveDownloadedTheToolbelt.png>
-
+</pre>
+In this case, you now have the Heroku toolbelt working on CSIL and you can proceed with the next step, whatever that may be.
 </td>
 <td style="vertical-align:top;">
 <pre>
     -bash-4.3$ heroku
     bash: heroku: command not found...
     Install package 'rubygem-heroku' to provide command 'heroku'? [N/y] 
-
-In this case, type N and hit enter, and then read through this step again.
 </pre>
+In this case, something went wrong.  You do not have the heroku toolbelt installed, and installing the rubygem-heroku package isn't likely to help you.   Type N and hit enter, and then read through this step again.  If you are still unsuccessful, ask for help.
 </td>
 </tr>
 </table>
