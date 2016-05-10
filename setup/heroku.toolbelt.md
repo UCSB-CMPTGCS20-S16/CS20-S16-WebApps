@@ -7,20 +7,20 @@ Step 0: Understanding what we are trying to do
 
 ### What are we trying to accomplish again in this lab?
 
--   In this lab, we will <em>create a basic "Hello, World" type web app in Java"</em>
+-   In this lab, we will <em>create a basic "Hello, World" type web app in Python"</em>
 -   A web app is a piece of Java code that takes HTTP request messages as input, and responds with HTTP response objects as output.
--   Heroku is a platform where we can host a Java web app.
+-   Heroku is a platform where we can host web apps written in a variety of languages, including Python
+-   For our Python web apps, we'll choose a platform called *Flask*.  
+-   Django is another choices, but it's a bit more complex than Flask, which is easier to learn.
 
 ### Why use Heroku?
 
 -   Web applications run on the "server" side of the web architecture, not the client side.
--   So to test a web application, we need to set up a web server that can run Java code.
--   Configuring a web server for Java is challenging. But, fortunately, we don't have to.
--   Heroku.com offers "platform as a service" cloud computing for Java web applications.
+-   So to test a web application, we need to set up a web server that can run Python code.
+-   Configuring a web server for Python is challenging. But, fortunately, we don't have to.
+-   Heroku.com offers "platform as a service" cloud computing for Python web applications.
 -   We'll use the "free plan" that they offer for folks just getting started with learning Heroku.
 -   This puts your application "on the web", for real, so that anyone in the world can access it 24/7
-
-To run a servlet locally on your own machine, you could also use a servlet container such as Tomcat, Jetty, or Resin. Configuring those to run servlets locally on your own machine is not too bad, but configuring those to run on a shared hosting environment such as CSIL can be quite painful, so we are just going to avoid that altogether.
 
 ### Limitations of the free plan of Heroku
 
@@ -52,26 +52,157 @@ Then you probably have a disk quota problem.
     -   Use `ssh` `yourusername@csil.cs.ucsb.edu` to get into your account from their terminal session.
 -   For troubleshooting tips, visit: <https://foo.cs.ucsb.edu/56wiki/index.php/CSIL#CSIL_disk_quota_Troubleshooting>
 
-Step 1: Create a Heroku Account associated with your umail.ucsb.edu
--------------------------------------------------------------------
 
-If you do not already have a Heroku account associated with your umail.ucsb.edu account, navigate to <https://www.heroku.com/> and click the "Sign up for Free" link.
 
-<https://www.cs.ucsb.edu/~pconrad/images/heroku/50/HerokuSignup.png>
+# Step 3b: Set Up Heroku Toolbelt on CSIL
 
-You'll be asked for:
+So, in the [Set Up](https://devcenter.heroku.com/articles/getting-started-with-java#set-up) step, the instructions say "In this step you will install the Heroku Toolbelt."
 
--   First Name
--   Last Name
--   Email—use your @umail.ucsb.edu account.
-    -   If you are a student registered for CMPSC 56 at UCSB, we need this association with your identity as a UCSB student in this course to give you credit for the work.
-    -   But, if you are just doing this lab "for the experience" and don't care about credit, you can use any email you like.
--   Company (you may leave this blank).
--   Preferred Development Language: We suggest you select "Java" if you are currently enrolled in CMPSC 56
-    -   (Don't worry; this doesn't prevent you from using the account with other languages later.)
+**This instructions for this step, as written, absolutely will not work from a non-privileged account on CSIL.**
 
-<div style="clear:both;">
+If you are working on a CSIL machine—that is, a machine in Phelps 3525, the CSIL lab, or ssh'ing into CSIL—as opposed to working completely on your own computer, without using CSIL resources at all—you will need to make significant modifications to the instructions for this step.
+
+Read and follow the instructions in this step carefully, and you should have no trouble.
+
+#### Are you directly on CSIL, or using a Windows or Mac machine to access CSIL?
+
+If you are using a Windows or Mac machine to access CSIL, then your web browser window is probably going to automatically "default" to a download option for the type of system your web browser is running on.
+
+Just ignore the download, and skip over the next step.
+
+#### Are you instead, choosing to do the tutorial entirely on your own machine, without using CSIL?
+
+If you are using a Windows or Mac machine to access CSIL, then your web browser window is probably going to automatically "default" to a download option for the type of system your web browser is running on. In that case, you'll download and install the Heroku Toolbelt at this step, then skip directly to the next step.
+
+NOTE THAT WE ARE NOT PREPARED TO PROVIDE TECH SUPPORT FOR THIS OPTION. You are welcome to try it, and you'll probably be fine and learn a lot, but you are on your own.
+
+If you do choose that option, you must have installed the JDK for Java 8, and Maven 3 back at the ["Set up"](https://devcenter.heroku.com/articles/getting-started-with-java#set-up) step.
+
+#### Are you running directly on a machine in Phelps 3525 or the CSIL lab?
+
+In this case, the instructions might give you the choice of various downloads: Windows, Mac, Debian/Ubuntu and Standalone.
+
+Clearly the Windows and Mac options don't apply. And we aren't running Debian/Ubuntu as the version of Linux on the local UCSB machines, so that doesn't apply.
+
+So, you might think "standalone" is the answer. In fact, we are going to do a "variation" of the standalone option, but we aren't going to follow the instructions literally. I'll explain why, next, and explain what we ARE going to do instead.
+
+So, for now, "choose" standalone, but DON'T follow the instructions listed.
+
+#### What the "standalone" option would do.
+
+Choosing Standalone invites you to type the following command, which you SHOULD NOT DO:
+
+<div>
+`$` <span style="text-decoration:line-through">`wget` `-qO-` `https://toolbelt.heroku.com/install.sh` `|` `sh`</span> <span style="font-size:120%; font-weight:bold;color:#600;"><span style="font-size:200%">←</span><span>DO NOT DO THIS!</span></span>
+
 </div>
+**Why you shouldn't do that**
+
+Here's what that command does:
+
+-   Uses wget to download a shell script from the web
+-   Pipes that shell script into sh, which then just executes all of the commands in the script.
+
+And, it turns out that the commands in that script require `sudo` permission, which means they can modify your system in any way shape or form.
+
+To be fair, that's not <em>that</em> unusual for software installers. And since it uses sudo, it will ask for permission first (i.e. for an administrator password, which you don't have.) Still, though, this is a bit unusual from the standpoint of how things are typically done in the Unix/Linux world.
+
+If you were to download this script, here's what it does, in plain english:
+
+-   Downloads a tarball of code written in Ruby
+    -   A tarball is a compressed archive of files
+    -   You may be familiar with a ".zip file". Similar idea.
+-   Executes the code with "sudo" permission.
+
+Needless to say, that will fail. But it turns out, the only reason "sudo" permission is needed is that the script is trying to put the Heroku toolbelt software into the directory /usr/local/heroku/bin. That's a directory that you as a regular user have no permission to write into.
+
+**What you should do instead**
+
+So, as the tip box above indicates, for various reasons, including the fact that you have no permission to write into /usr/local/heroku/bin, we can't use the method suggested by the Heroku tutorial, and the automatic script won't work.
+
+But, it should be no problem to **put the software into ${HOME}/heroku/bin by hand.** So that's what we'll do. The following steps "mirror" what the automatic "Set Up the Heroku Toolbelt" procedure does, but in a way that will work on your CSIL account:
+
+(1) Create a directory ${HOME}/heroku/bin
+
+    mkdir -p ${HOME}/heroku/bin
+
+(2) cd into that directory
+
+    cd ${HOME}/heroku/bin
+
+Use `ls` to verify that this is an empty directory. If not, empty it out before proceeding. (If you aren't sure how, get some Unix help from a knowledgeable person.)
+
+(3a) Download the tarball for the Heroku client. This URL comes from the install script that was in the "install.sh" that Heroku wanted us to download and execute directly. Instead, we'll download it by hand, using wget:
+
+    wget https://s3.amazonaws.com/assets.heroku.com/heroku-client/heroku-client.tgz
+
+(3b) Untar the tarball.
+
+    tar -xvf heroku-client.tgz
+
+(4) You should now have a subdirectory called `heroku-client`.
+
+And, you should now be able to run the heroku toolbelt client by typing the following. Give it a try:
+
+    ${HOME}/heroku/bin/heroku-client/bin/heroku
+
+(5) Optional: If you want to add this into your path, you should be able to do so by putting the following in your ${HOME}/.profile file (assuming you are using bash as your shell)
+
+    export PATH=${PATH}:${HOME}/heroku/bin/heroku-client/bin
+
+That should allow you to just type "heroku" to run the heroku-client. Note that like any change to your .profile file, you either have to reload it to your shell, or open a new login shell to see the effect take place.
+
+Try typing `heroku` at the shell prompt when logged into CSIL.
+
+What do you see?
+
+<table style="border: 1px solid black;">
+<tr>
+<td style="width:50%">
+<b>This is what you want to see:</b>
+
+</td>
+<td style="width:50%">
+<b>This is what you do NOT want to see:</b>
+
+</td>
+</tr>
+<tr>
+<td style="vertical-align:top;">
+    -bash-4.3$ heroku
+    -bash-4.3$ heroku
+    Updating Heroku v4 CLI to 4.27.9-cce0260 (master)... done
+    Updating plugins... done
+    rebuilding plugins cache... done
+    Usage: heroku COMMAND [--app APP] [command-specific-options]
+
+    Primary help topics, type "heroku help TOPIC" for more details:
+
+<em>\[Many lines of output omitted\]</em>
+
+      twofactor    #  manage two-factor authentication settings
+      update       #  update the heroku client
+      version      #  display version
+    -bash-4.3$ 
+
+In this case, click on the button on the Heroku tutorial web page, and continue:
+
+<http://www.cs.ucsb.edu/~pconrad/images/heroku/50/IHaveDownloadedTheToolbelt.png>
+
+</td>
+<td style="vertical-align:top;">
+    -bash-4.3$ heroku
+    bash: heroku: command not found...
+    Install package 'rubygem-heroku' to provide command 'heroku'? [N/y] 
+
+In this case, type N and hit enter, and then read through this step again.
+
+</td>
+</tr>
+</table>
+
+
+
 Step 2: Find the Heroku "Getting Started With Java" tutorial
 ------------------------------------------------------------
 
