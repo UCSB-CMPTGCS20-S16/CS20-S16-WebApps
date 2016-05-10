@@ -19,7 +19,15 @@ If the explanations in the "why" column don't make perfect sense yet, don't stre
 Create a Heroku Account
 -----------------------
 
-This part is easy.  Go to http://heroku.com and sign up for a "free" account.    
+This part is easy.  Go to http://heroku.com and sign up for a "free" account.  
+
+You'll be asked for:
+* First Name and Last Name
+* Email.  We suggest you use your school email account (e.g. @umail.ucsb.edu for UCSB, or @ucsd.edu for UCSD, etc.)
+* Company (you may leave this blank).
+* Preferred Development Language: We suggest you select "Python". 
+
+A note on this "preferred development langauge": Setting this to Python just customizes the site to give you appropriate suggestions for what to do next.  This doesn't prevent you from using the account with other languages later&mdash;you can still access all the features of Heroku for all the supported languages (e.g. Ruby, Java, etc.) even if you never change this. 
 
 Make a note of your username and your password.
 
